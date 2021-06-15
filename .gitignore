@@ -1,0 +1,12 @@
+# .gitignore
+
+algorithm-two-wordnet/bin
+algorithm-two-wordnet/resource/wordnet/
+/.metadata/
+*.classpath*
+*.project*
+*.settings*
+*.idea*
+
+*.jar
+*.zip
