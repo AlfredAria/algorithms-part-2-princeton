@@ -15,6 +15,11 @@ public class BoggleSolverOptimization {
 	public BoggleSolverOptimization(String[] dictionary) {
 		tst = new TST<>();
 		for (String word : dictionary) {
+			if (word.replace("QU", "").contains("Q")) {
+				// This word will never have a match in the board because
+				// all board slots have "QU" grids but no "Q" grids.
+				continue;
+			}
 			tst.put(stripU(word), getScore(word));
 		}
 	}
@@ -66,8 +71,8 @@ public class BoggleSolverOptimization {
 		// If a word is found on this TST node, append it to results.
 		if (bt.hasValue()) {
 			String word = appendU(bt.getWord());
-			if (getScore(word) > 0) {
-				results.add(appendU(bt.getWord()));
+			if (bt.getValue() > 0) {
+				results.add(word);
 			}
 		}
 

@@ -17,6 +17,11 @@ public class BoggleSolverBasic {
 	public BoggleSolverBasic(String[] dictionary) {
 		tst = new TrieST<>();
 		for (String word : dictionary) {
+			if (word.replace("QU", "").contains("Q")) {
+				// This word will never have a match in the board because
+				// all board slots have "QU" grids but no "Q" grids.
+				continue;
+			}
 			tst.put(word.toUpperCase(), getScore(word));
 		}
 	}
