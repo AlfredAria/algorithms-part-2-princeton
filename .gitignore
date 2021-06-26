@@ -7,6 +7,7 @@ algorithm-two-wordnet/resource/wordnet/
 *.project*
 *.settings*
 *.idea*
+burrows/
 
 *.jar
 *.zip
