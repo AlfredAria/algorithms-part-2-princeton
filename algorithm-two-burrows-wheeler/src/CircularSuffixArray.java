@@ -5,11 +5,11 @@ public class CircularSuffixArray {
 	// Stores a double of the original string S
 	// to allow substring accessing from any index
 	// 0 <= i < len(S).
-	private String str;
+	private char[] str;
 	
 	private int length;
 	private Accessor[] accessors;
-	class Accessor implements Comparable<Accessor> {
+	private class Accessor implements Comparable<Accessor> {
 		// This accessor's associated original suffix array index.
 		private final int index;
 		Accessor(int index) {
@@ -20,14 +20,17 @@ public class CircularSuffixArray {
 			return this.index;
 		}
 		
-		@Override
-		public String toString() {
-			return str.substring(index, index + length);
-		}
-
 		@Override 
 		public int compareTo(CircularSuffixArray.Accessor o) {
-			return toString().compareTo(o.toString());
+			int i = 0;
+			while(i < length) {
+				if (str[this.index + i] == str[o.index + i]) {
+					i++;
+				} else {					
+					return str[this.index + i] - str[o.index + i];
+				}
+			}
+			return 0;
 		}
 		
 	}
@@ -39,8 +42,11 @@ public class CircularSuffixArray {
     	if (s == null || s.isEmpty()) {
     		throw new IllegalArgumentException("Null or empty string.");
     	}
-    	str = s + s;
     	length = s.length();
+    	str = new char[length() * 2];
+    	for (int i = 0; i < length; i ++) { str[i] = s.charAt(i); }
+    	for (int i = 0; i < length; i ++) { str[i + length] = s.charAt(i); }
+
     	accessors = new Accessor[length()];
     	for (int i = 0; i < length(); i ++) {
     		accessors[i] = new Accessor(i);
@@ -87,9 +93,9 @@ public class CircularSuffixArray {
     	System.out.println("Suffix array length: " + csa.length());
     	System.out.println("String length: " + csa.length());
     	for (int i = 0; i < 12; i ++) {
-        	System.out.format(
-        			"Index of suffix ranked %s in origin array: %s\n",
-        			i, csa.index(i));    		
+        	System.out.println(
+        			"Index of suffix ranked " + i + 
+        			" in origin array: " + csa.index(i));    		
     	}
     }
 
